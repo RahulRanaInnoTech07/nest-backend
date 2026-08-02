@@ -10,3 +10,4 @@ export * from './memberships';
 export * from './role-scopes';
 export * from './invitations';
 export * from './platform-admins';
+export * from './audit-log';

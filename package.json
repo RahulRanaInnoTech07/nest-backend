@@ -8,20 +8,40 @@
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "nest start",
-    "start:dev": "nest start --watch",
-    "start:debug": "nest start --debug --watch",
-    "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+
+    "start": "nest start",
+    "start:debug": "nest start --debug --watch",
+    "start:local": "ENV_FILE=.env.local nest start --watch",
+    "start:dev": "ENV_FILE=.env.development nest start",
+    "start:prod": "ENV_FILE=.env.production node dist/main",
+    "prod": "npm run build && npm run start:prod",
+
+    "docker:up": "docker compose up -d --wait",
+    "docker:down": "docker compose down",
+    "docker:reset": "docker compose down -v && docker compose up -d --wait",
+    "local:setup": "npm run docker:up && npm run db:migrate:local && npm run db:seed:local",
+
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
+
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate",
     "db:check": "drizzle-kit check",
-    "db:studio": "drizzle-kit studio"
+    "db:studio": "drizzle-kit studio",
+    "db:migrate": "drizzle-kit migrate",
+    "db:seed": "tsx src/database/seed.ts",
+
+    "db:migrate:local": "ENV_FILE=.env.local npm run db:migrate",
+    "db:seed:local": "ENV_FILE=.env.local npm run db:seed",
+    "db:studio:local": "ENV_FILE=.env.local npm run db:studio",
+
+    "db:migrate:dev": "ENV_FILE=.env.development npm run db:migrate",
+    "db:seed:dev": "ENV_FILE=.env.development npm run db:seed",
+
+    "db:migrate:prod": "ENV_FILE=.env.production npm run db:migrate"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
