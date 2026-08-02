@@ -32,6 +32,7 @@
     "db:check": "drizzle-kit check",
     "db:studio": "drizzle-kit studio",
     "db:migrate": "drizzle-kit migrate",
+    "db:migrate:deploy": "node dist/database/migrate.js",
     "db:seed": "tsx src/database/seed.ts",
 
     "db:migrate:local": "ENV_FILE=.env.local npm run db:migrate",
