@@ -37,3 +37,11 @@ export const scopeTypeEnum = pgEnum('scope_type', [
   'subject',
 ]);
 export type ScopeType = (typeof scopeTypeEnum.enumValues)[number];
+
+export const invitationStatusEnum = pgEnum('invitation_status', [
+  'pending',
+  'accepted',
+  'expired',
+  'revoked',
+]);
+export type InvitationStatus = (typeof invitationStatusEnum.enumValues)[number];
