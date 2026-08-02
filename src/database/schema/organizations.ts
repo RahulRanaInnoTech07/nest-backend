@@ -1,10 +1,8 @@
 import { jsonb, pgTable, text, uuid } from 'drizzle-orm/pg-core';
 
 import { timestamps } from './_helpers';
+import { orgStatusEnum } from './enums';
 import { users } from './users';
-
-/** Lifecycle of an organization (tenant). */
-export type OrganizationStatus = 'active' | 'suspended';
 
 /**
  * An organization is a tenant — think a school. It's the isolation boundary:
@@ -24,10 +22,7 @@ export const organizations = pgTable('organizations', {
   contactEmail: text('contact_email'),
   timezone: text('timezone'),
 
-  status: text('status')
-    .$type<OrganizationStatus>()
-    .notNull()
-    .default('active'),
+  status: orgStatusEnum('status').notNull().default('active'),
 
   // Per-org configuration escape hatch.
   settings: jsonb('settings')

@@ -1,9 +1,7 @@
 import { jsonb, pgTable, text, timestamp, uuid } from 'drizzle-orm/pg-core';
 
 import { timestamps } from './_helpers';
-
-/** Lifecycle of a global user account. */
-export type UserStatus = 'active' | 'suspended';
+import { userStatusEnum } from './enums';
 
 /**
  * Global identity — one row per person, mirroring their Cognito account.
@@ -27,7 +25,7 @@ export const users = pgTable('users', {
   locale: text('locale').default('en'),
   timezone: text('timezone'),
 
-  status: text('status').$type<UserStatus>().notNull().default('active'),
+  status: userStatusEnum('status').notNull().default('active'),
 
   metadata: jsonb('metadata')
     .$type<Record<string, unknown>>()
