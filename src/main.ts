@@ -6,6 +6,9 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const config = app.get(AppConfigService);
 
+  // Fire onModuleDestroy hooks (e.g. closing the DB pool) on SIGINT/SIGTERM.
+  app.enableShutdownHooks();
+
   app.enableCors({
     origin: config.allowedOrigins,
     credentials: true,
