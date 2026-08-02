@@ -13,7 +13,7 @@ export type UserStatus = 'active' | 'suspended';
 export const users = pgTable('users', {
   id: uuid('id').primaryKey().defaultRandom(),
 
-  // Link to the Cognito identity. Nullable for now (auth isn't wired yet);
+  // Link to the Cognito identity. Every user is provisioned from Cognito.
   cognitoSub: text('cognito_sub').notNull().unique(),
 
   // Store normalized (lowercased) at the service layer for case-insensitive
